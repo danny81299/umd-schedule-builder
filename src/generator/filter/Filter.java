@@ -1,14 +1,14 @@
-package com.danzou.builder.filter;
+package generator.filter;
 
-import com.danzou.builder.Schedule;
-import com.danzou.builder.Section;
+import generator.Schedule;
+import generator.Section;
 
 import java.util.Set;
 
 public abstract class Filter {
-    protected final String courseId;
-    protected final Set<?> include;
-    protected final Set<?> exclude;
+    final String courseId;
+    final Set<?> include;
+    final Set<?> exclude;
 
     public Filter(String courseId, Set<?> include, Set<?> exclude) {
         this.courseId = courseId;

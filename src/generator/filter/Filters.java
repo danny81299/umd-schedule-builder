@@ -1,4 +1,4 @@
-package com.danzou.builder.filter;
+package generator.filter;
 
 import java.util.*;
 

@@ -1,4 +1,4 @@
-package com.danzou.builder;
+package generator;
 
 public enum ClassType {
     LECTURE, DISCUSSION, ONLINE, UNKNOWN;

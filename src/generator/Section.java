@@ -1,4 +1,4 @@
-package com.danzou.builder;
+package generator;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;

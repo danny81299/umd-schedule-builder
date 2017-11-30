@@ -1,7 +1,7 @@
-package com.danzou.builder.filter;
+package generator.filter;
 
-import com.danzou.builder.ClassType;
-import com.danzou.builder.Section;
+import generator.ClassType;
+import generator.Section;
 
 import java.util.HashSet;
 import java.util.Set;

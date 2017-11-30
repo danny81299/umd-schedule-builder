@@ -1,8 +1,8 @@
-package com.danzou.builder.filter;
+package generator.filter;
 
-import com.danzou.builder.Meeting;
-import com.danzou.builder.Schedule;
-import com.danzou.builder.Section;
+import generator.Meeting;
+import generator.Schedule;
+import generator.Section;
 import com.google.common.collect.Range;
 import com.google.common.collect.RangeSet;
 import com.google.common.collect.TreeRangeSet;

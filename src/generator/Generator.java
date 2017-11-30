@@ -1,7 +1,6 @@
-package com.danzou.builder;
+package generator;
 
-import com.danzou.builder.filter.Filter;
-import com.danzou.builder.filter.Filters;
+import generator.filter.Filter;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSortedMap;
 import org.json.JSONArray;
@@ -66,15 +65,7 @@ public class Generator {
         this.sectionLookup = ImmutableSortedMap.copyOf(sectionLookup);
     }
 
-    public String getSemester() {
-        return semester;
-    }
-
-    public String getSemesterString() {
-        return semesterString;
-    }
-
-    public Set<Course> getCourses() {
+/*    public Set<Course> getCourses() {
         return allCourses.keySet();
     }
 
@@ -82,19 +73,7 @@ public class Generator {
         Set<Section> allSections = new HashSet<>();
         for (Set<Section> sections : allCourses.values()) allSections.addAll(sections);
         return allSections;
-    }
-
-    public Course getCourseByString(String s) {
-        return courseLookup.get(s);
-    }
-
-    public Section getSectionByString(String s) {
-        return sectionLookup.get(s);
-    }
-
-    public Set<Section> getSections(Course c) {
-        return allCourses.get(c);
-    }
+    }*/
 
 /*    public void filterSections(Filters filters) {
         for (Course c : allCourses.keySet()) {
@@ -110,11 +89,11 @@ public class Generator {
         }
     }*/
 
-    public Set<Schedule> getSchedulePermutations() {
+    Set<Schedule> getSchedulePermutations() {
         return schedulePermutations;
     }
 
-    public void trimInvalidSchedules() {
+    void trimInvalidSchedules() {
         Set<Schedule> trimmedPermutations = new HashSet<>();
         for (Schedule s : schedulePermutations) {
             if (!s.hasConflicts()) trimmedPermutations.add(s);
@@ -122,7 +101,7 @@ public class Generator {
         schedulePermutations = trimmedPermutations;
     }
 
-    public void filterSchedules(Filter filter) {
+    void filterSchedules(Filter filter) {
         Set<Schedule> filteredSchedules = new HashSet<>();
         for (Schedule s : schedulePermutations) {
             if (filter.has(s)) filteredSchedules.add(s);
@@ -130,7 +109,7 @@ public class Generator {
         schedulePermutations = filteredSchedules;
     }
 
-    public void generateSchedulePermutations() {
+    void generateSchedulePermutations() {
         int setSize = 1;
         for (Set<Section> set : this.allCourses.values()) setSize *= set.size();
         this.generateSchedulePermutations(new ArrayList<>(this.allCourses.values()), new HashSet<>(setSize),

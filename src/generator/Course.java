@@ -1,4 +1,4 @@
-package com.danzou.builder;
+package generator;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

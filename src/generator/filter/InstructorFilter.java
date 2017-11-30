@@ -1,6 +1,6 @@
-package com.danzou.builder.filter;
+package generator.filter;
 
-import com.danzou.builder.Section;
+import generator.Section;
 
 import java.util.Collections;
 import java.util.HashSet;

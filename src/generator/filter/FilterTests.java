@@ -1,7 +1,7 @@
-package com.danzou.builder.filter;
+package generator.filter;
 
-import com.danzou.builder.Generator;
-import com.danzou.builder.Section;
+import generator.Generator;
+import generator.Section;
 import org.json.JSONObject;
 import org.junit.Test;
 

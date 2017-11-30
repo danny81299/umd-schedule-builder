@@ -1,4 +1,4 @@
-package com.danzou.builder;
+package generator;
 
 import com.google.common.collect.Range;
 import org.json.JSONObject;
