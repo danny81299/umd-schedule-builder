@@ -1,4 +1,4 @@
-package generator;
+package generator.course;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
@@ -9,18 +9,10 @@ import java.util.*;
 public class Section implements Comparable<Section>, Iterable<Meeting> {
     private static final JSONObject REFERENCE_SECTION_JSON = generateReferenceSection();
     private final JSONObject section;
-    private final String sectionId;
-    private final String courseId;
-    private final String number;
     private final Set<String> instructors = new HashSet<>();
-    private final int seats;
-    private final String semester;
     private final Map<DayOfWeek, Set<Meeting>> meetingsByDay = new HashMap<>();
     private final Map<ClassType, Meeting> meetingsByClassType = new HashMap<>();
     private final Set<Meeting> meetings = new HashSet<>();
-    private final int openSeats;
-    private final int waitlist;
-    private Course course;
     private static JSONObject generateReferenceSection() {
         Map<String, Object> referenceSection = new HashMap<>();
         referenceSection.put("section_id", "");
@@ -35,41 +27,31 @@ public class Section implements Comparable<Section>, Iterable<Meeting> {
         System.out.println(referenceSection.keySet());
         return new JSONObject(referenceSection);
     }
+    private Course course;
+
+    //    private final String sectionId;
+    //    private final String number;
+//    private final String courseId;
+//    private final int seats;
+//    private final String semester;
+//    private final int openSeats;
+//    private final int waitlist;
 
     public Section(JSONObject section) {
         // TODO replace with isSimilar
-        // TODO fix reference keyset and inconsistent JSON
+        // TODO fix reference keyset and inconsistent JSON behavior
+
 //        if (!section.keySet().equals(REFERENCE_SECTION_JSON.keySet())) {
 //            throw new RuntimeException(section.toString() + "JSONObject did not match REFERENCE_SECTION_JSON");
 //        }
         this.section = section;
-        this.sectionId = section.getString("section_id");
-        this.courseId = section.getString("course");
-        this.number = section.getString("number");
         for (Object o : section.getJSONArray("instructors")) {
             this.instructors.add((String) o);
         }
-        this.seats = section.getInt("seats");
-        this.semester = section.getString("semester");
-        for (Object o : section.getJSONArray("meetings")) {
-            JSONObject meetingJson = (JSONObject) o;
-            ClassType type = ClassType.parse(meetingJson.getString("classtype"));
-            if (meetingJson.getString("room").equals("ONLINE")) continue;
-            if (meetingJson.getString("room").equals("")) continue;
-            Meeting meeting = new Meeting(meetingJson);
-            this.meetings.add(meeting);
-            this.meetingsByClassType.put(type, meeting);
-            for (DayOfWeek day : meeting.getDays()) {
-                if (!meetingsByDay.containsKey(day)) meetingsByDay.put(day, new HashSet<>());
-                meetingsByDay.get(day).add(meeting);
-            }
-        }
-        this.openSeats = section.optInt("open_seats");
-        this.waitlist = section.optInt("waitlist");
+        generateMeetings();
     }
 
-
-/*    String getSectionId() {
+    String getSectionId() {
         return section.getString("section_id");
     }
 
@@ -86,34 +68,19 @@ public class Section implements Comparable<Section>, Iterable<Meeting> {
     }
 
     int getOpenSeats() {
-        return section.getInt("open_seats");
-    }*/
+        return section.optInt("open_seats", -1);
+    }
+
     public String getInternalString(String s) {
         return section.getString(s);
-    }
-
-    public String getSectionId() {
-        return sectionId;
-    }
-
-    public String getCourseId() {
-        return courseId;
-    }
-
-    public String getNumber() {
-        return number;
     }
 
     public Set<String> getInstructors() {
         return instructors;
     }
 
-    public int getSeats() {
-        return seats;
-    }
-
     public String getSemester() {
-        return semester;
+        return section.getString("semester");
     }
 
     public Set<Meeting> getMeetings() {
@@ -128,12 +95,8 @@ public class Section implements Comparable<Section>, Iterable<Meeting> {
         return meetingsByDay;
     }
 
-    public int getOpenSeats() {
-        return openSeats;
-    }
-
     public int getWaitlist() {
-        return waitlist;
+        return section.optInt("waitlist", -1);
     }
 
     void setCourse(Course course) {
@@ -144,14 +107,26 @@ public class Section implements Comparable<Section>, Iterable<Meeting> {
     }
 
     // might be null
+    @Deprecated
     Course getCourse() {
         return this.course;
     }
 
-//    public boolean satisfies(Filter filter) {
-//        if filter.getCourseId()
-//        return false;
-//    }
+    private void generateMeetings() {
+        for (Object o : section.getJSONArray("meetings")) {
+            JSONObject meetingJson = (JSONObject) o;
+            ClassType type = ClassType.parse(meetingJson.getString("classtype"));
+            if (meetingJson.getString("room").equals("ONLINE")) continue;
+            if (meetingJson.getString("room").equals("")) continue;
+            Meeting meeting = new Meeting(meetingJson);
+            this.meetings.add(meeting);
+            this.meetingsByClassType.put(type, meeting);
+            for (DayOfWeek day : meeting.getDays()) {
+                if (!meetingsByDay.containsKey(day)) meetingsByDay.put(day, new HashSet<>());
+                meetingsByDay.get(day).add(meeting);
+            }
+        }
+    }
 
     @Override
     public boolean equals(Object o) {

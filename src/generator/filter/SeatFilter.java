@@ -1,16 +1,15 @@
 package generator.filter;
 
-import generator.Section;
+import generator.Schedule;
+import generator.course.Section;
 import com.google.common.collect.Range;
 
-import java.util.HashSet;
-
-public class SeatFilter extends Filter {
+public class SeatFilter extends AbstractFilter {
 
     private Range<Integer> seats;
 
-    private SeatFilter(String course, Range<Integer> range) {
-        super(course, new HashSet<>(), new HashSet<>());
+    private SeatFilter(String courseId, Range<Integer> range) {
+        super(courseId);
         this.seats = range;
     }
 
@@ -30,6 +29,15 @@ public class SeatFilter extends Filter {
         return new SeatFilter(course, range);
     }
 
+    @Override
+    public boolean has(Schedule schedule) {
+        for (Section section : schedule) {
+            if (!has(section)) return false;
+        }
+        return true;
+    }
+
+    @Override
     public boolean has(Section section) {
         return seats.contains(section.getOpenSeats());
     }

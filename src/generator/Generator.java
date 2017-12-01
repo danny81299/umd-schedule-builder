@@ -1,8 +1,11 @@
 package generator;
 
+import generator.course.Course;
+import generator.course.Section;
 import generator.filter.Filter;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSortedMap;
+import generator.filter.Filters;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -61,6 +64,7 @@ public class Generator {
         }
 
         this.allCourses = ImmutableSortedMap.copyOf(allCourses);
+        this.filteredCourses = new HashMap<>(allCourses);
         this.courseLookup = ImmutableSortedMap.copyOf(courseLookup);
         this.sectionLookup = ImmutableSortedMap.copyOf(sectionLookup);
     }
@@ -75,21 +79,24 @@ public class Generator {
         return allSections;
     }*/
 
-/*    public void filterSections(Filters filters) {
+    public void filterSections(Filters filters) {
         for (Course c : allCourses.keySet()) {
             filteredCourses.put(c, new HashSet<>());
             if (filters.containsCourseId(c.getCourseId())) {
                 for (Section s : allCourses.get(c)) {
-                    for (Filter f : filters.get(c.getCourseId())) {
-                        if (!f.has(s)) break;
-                    }
                     filteredCourses.get(c).add(s);
+                    for (Filter f : filters.getFilters(c.getCourseId())) {
+                        if (!f.has(s)) {
+                            filteredCourses.get(c).remove(s);
+                            break;
+                        }
+                    }
                 }
             }
         }
-    }*/
+    }
 
-    Set<Schedule> getSchedulePermutations() {
+    Set<Schedule> getPermutations() {
         return schedulePermutations;
     }
 
@@ -109,15 +116,22 @@ public class Generator {
         schedulePermutations = filteredSchedules;
     }
 
-    void generateSchedulePermutations() {
+    void generateAllPermutations() {
         int setSize = 1;
         for (Set<Section> set : this.allCourses.values()) setSize *= set.size();
         this.generateSchedulePermutations(new ArrayList<>(this.allCourses.values()), new HashSet<>(setSize),
                 new HashMap<>());
     }
 
-    // TODO deal with weirdness of going between lists and sets
+    void generatePermutations() {
+        int setSize = 1;
+        for (Set<Section> set : this.filteredCourses.values()) setSize *= set.size();
+        this.generateSchedulePermutations(new ArrayList<>(this.filteredCourses.values()), new HashSet<>
+                        (setSize), new HashMap<>());
+    }
 
+    // TODO deal with weirdness of going between lists and sets
+    // TODO change setList to filteredCourses?
     // TODO replace with Iterator?
     private void generateSchedulePermutations(List<Set<Section>> setList, Set<Map<Course, Section>> result,
                                                      Map<Course, Section> current) {
@@ -135,7 +149,7 @@ public class Generator {
         }
     }
     // https://stackoverflow.com/questions/17192796/generate-all-combinations-from-multiple-lists
-    @Deprecated
+/*    @Deprecated
     private static void generatePermutations(List<Set<?>> setList, Set<Set<?>> result,
                                                      Set<Object> current) {
         int depth = current.size();
@@ -148,7 +162,7 @@ public class Generator {
             generatePermutations(setList, result, current);
             current.remove(e);
         }
-    }
+    }*/
 
     public static String sendGet(String url) throws Exception {
         URL urlObj = new URL(url);

@@ -1,4 +1,4 @@
-package generator;
+package generator.course;
 
 public enum ClassType {
     LECTURE, DISCUSSION, ONLINE, UNKNOWN;

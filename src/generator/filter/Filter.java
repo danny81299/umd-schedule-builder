@@ -1,20 +1,9 @@
 package generator.filter;
 
 import generator.Schedule;
-import generator.Section;
+import generator.course.Section;
 
-import java.util.Set;
-
-public abstract class Filter {
-    final String courseId;
-    final Set<?> include;
-    final Set<?> exclude;
-
-    public Filter(String courseId, Set<?> include, Set<?> exclude) {
-        this.courseId = courseId;
-        this.include = include;
-        this.exclude = exclude;
-    }
+public interface Filter {
 
     /**
      * Returns whether or not the section satisfies the filter.
@@ -29,19 +18,10 @@ public abstract class Filter {
      * @param section the section to test on.
      * @return <tt>true</tt> if section satisfies the filter. Otherwise false.
      */
-    public abstract boolean has(Section section);
+    boolean has(Section section);
 
-    public boolean has(Schedule schedule) {
-        for (Section s : schedule) {
-            if (s.getCourseId().equals(courseId)) {
-                if (exclude.size() == 0 && has(s)) return true;
-                if (include.size() == 0 && !has(s)) return false;
-            }
-        }
-        return include.size() == 0;
-    }
+    boolean has(Schedule schedule);
 
-    public String getCourseId() {
-        return courseId;
-    }
+    /**/
+
 }

@@ -1,15 +1,15 @@
 package generator.filter;
 
-import generator.Section;
+import generator.course.Section;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-public class InstructorFilter extends Filter {
+public class InstructorFilter extends DualFilter {
 
-    private InstructorFilter(String applicableCourse, Set<String> include, Set<String> exclude) {
-        super(applicableCourse, include, exclude);
+    private InstructorFilter(String courseId, Set<String> include, Set<String> exclude) {
+        super(courseId, include, exclude);
     }
 
     public static InstructorFilter include(String courseId, Set<String> include) {

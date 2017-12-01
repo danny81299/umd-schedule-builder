@@ -1,7 +1,7 @@
 package generator.filter;
 
 import generator.Generator;
-import generator.Section;
+import generator.course.Section;
 import org.json.JSONObject;
 import org.junit.Test;
 

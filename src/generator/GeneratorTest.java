@@ -38,28 +38,28 @@ public class GeneratorTest {
     public void testConsistentPermutations() throws Exception {
         Generator generator = new Generator("201801", getCourseIdsLong());
 
-        generator.generateSchedulePermutations();
-        assertEquals(179712, generator.getSchedulePermutations().size());
+        generator.generateAllPermutations();
+        assertEquals(179712, generator.getPermutations().size());
     }
 
     @Test
     public void testConsistentScheduleTrim() throws Exception {
         Generator generator = new Generator("201801", getCourseIdsLong());
 
-        generator.generateSchedulePermutations();
-        assertEquals(179712, generator.getSchedulePermutations().size());
+        generator.generateAllPermutations();
+        assertEquals(179712, generator.getPermutations().size());
         generator.trimInvalidSchedules();
-        assertEquals(65459, generator.getSchedulePermutations().size());
+        assertEquals(65459, generator.getPermutations().size());
     }
 
     @Test
     public void testSmallPermutations() throws Exception {
         Generator generator = new Generator("201801", getCourseIdsShort());
 
-        generator.generateSchedulePermutations();
-        assertEquals(32, generator.getSchedulePermutations().size());
+        generator.generateAllPermutations();
+        assertEquals(32, generator.getPermutations().size());
         generator.trimInvalidSchedules();
-        assertEquals(25, generator.getSchedulePermutations().size());
+        assertEquals(25, generator.getPermutations().size());
     }
 
     @Test
@@ -67,10 +67,10 @@ public class GeneratorTest {
         Generator generator = new Generator("201801", getCourseIdsShort());
         Filter instructorFilter = InstructorFilter.include("MATH341", "Wiseley Wong");
 
-        generator.generateSchedulePermutations();
+        generator.generateAllPermutations();
         generator.trimInvalidSchedules();
         generator.filterSchedules(instructorFilter);
-        assertEquals(12, generator.getSchedulePermutations().size());
+        assertEquals(12, generator.getPermutations().size());
     }
 
     @Test
@@ -79,11 +79,11 @@ public class GeneratorTest {
         Filter timeFilter = TimeFilter.startAfter("CMSC250", LocalTime.of(10, 0));
         Filter instructorFilter = InstructorFilter.include("MATH341", "Wiseley Wong");
 
-        generator.generateSchedulePermutations();
+        generator.generateAllPermutations();
         generator.trimInvalidSchedules();
         generator.filterSchedules(timeFilter);
         generator.filterSchedules(instructorFilter);
-        assertEquals(4, generator.getSchedulePermutations().size());
+        assertEquals(4, generator.getPermutations().size());
     }
 
     @Test
@@ -97,15 +97,14 @@ public class GeneratorTest {
                 InstructorFilter.include("INAG110", "Anthony Pagnotti"),
                 InstructorFilter.include("STAT400", "John Millson")
         ));
+        Filters filters = new Filters();
+        filters.addAll(instructorFilters);
 
-        generator.generateSchedulePermutations();
+        generator.filterSections(filters);
+        generator.generatePermutations();
         generator.trimInvalidSchedules();
-        for (Filter filter : instructorFilters) {
-            generator.filterSchedules(filter);
-        }
 
-        Object o = generator.getSchedulePermutations();
-        System.out.println(generator.getSchedulePermutations().size());
+        System.out.println(generator.getPermutations().size());
     }
 
     @Test
@@ -118,8 +117,8 @@ public class GeneratorTest {
         filterSet.addAll(Arrays.asList(
                 InstructorFilter.include("CMSC132", "Pedram Sadeghian"),
                 InstructorFilter.exclude("MATH341", "Wiseley Wong"),
-                TimeFilter.startAfter("CMSC132", LocalTime.of(10,0)),
-                TimeFilter.startAfter("CMSC250", LocalTime.of(9,30)),
+//                TimeFilter.startAfter("CMSC132", LocalTime.of(10,0)),
+//                TimeFilter.startAfter("CMSC250", LocalTime.of(9,30)),
 //                PropertyFilter.exclude("CMSC132", "number", new HashSet<>(Arrays.asList
 //                        ("0402", "0203"))),
                 PropertyFilter.include("CMSC250", "number", new HashSet<>(Arrays.asList
@@ -129,16 +128,17 @@ public class GeneratorTest {
         Filters filters = new Filters();
         filters.addAll(filterSet);
 
-        generator.generateSchedulePermutations();
+        generator.filterSections(filters);
+        generator.generatePermutations();
         generator.trimInvalidSchedules();
-        for (Filter filter : filterSet) {
-            generator.filterSchedules(filter);
-        }
 
-        Object o = generator.getSchedulePermutations();
-        System.out.println(generator.getSchedulePermutations().size());
-        if (generator.getSchedulePermutations().size() <= 20) {
-            for (Schedule schedule : generator.getSchedulePermutations()) {
+        int size = generator.getPermutations().size();
+
+        assertEquals(size, generator.getPermutations().size());
+
+        System.out.println(size);
+        if (size <= 20) {
+            for (Schedule schedule : generator.getPermutations()) {
                 System.out.println(schedule);
             }
         }
@@ -158,16 +158,16 @@ public class GeneratorTest {
         }
         filters.add(InstructorFilter.include("CMSC132", "Pedram Sadeghian"));
 
-        generator.generateSchedulePermutations();
+        generator.generateAllPermutations();
         generator.trimInvalidSchedules();
         for (Filter filter : filters) {
             generator.filterSchedules(filter);
         }
 
-        Object o = generator.getSchedulePermutations();
-        System.out.println(generator.getSchedulePermutations().size());
-        if (generator.getSchedulePermutations().size() <= 50) {
-            for (Schedule schedule : generator.getSchedulePermutations()) {
+        Object o = generator.getPermutations();
+        System.out.println(generator.getPermutations().size());
+        if (generator.getPermutations().size() <= 50) {
+            for (Schedule schedule : generator.getPermutations()) {
                 System.out.println(schedule);
             }
         }

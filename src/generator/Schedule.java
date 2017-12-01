@@ -3,6 +3,10 @@ package generator;
 import com.google.common.collect.Range;
 import com.google.common.collect.RangeSet;
 import com.google.common.collect.TreeRangeSet;
+import generator.course.ClassType;
+import generator.course.Course;
+import generator.course.Meeting;
+import generator.course.Section;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.DayOfWeek;

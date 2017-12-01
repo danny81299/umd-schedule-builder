@@ -1,12 +1,12 @@
 package generator.filter;
 
-import generator.ClassType;
-import generator.Section;
+import generator.course.ClassType;
+import generator.course.Section;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class MeetingFilter extends Filter {
+public class MeetingFilter extends DualFilter {
     private final String property;
 
     private MeetingFilter(String applicableCourse, String property, Set<String> include, Set<String> exclude) {

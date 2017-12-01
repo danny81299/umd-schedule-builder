@@ -1,4 +1,4 @@
-package generator;
+package generator.course;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -39,7 +39,7 @@ public class Course implements Comparable<Course> {
         this(new JSONObject(courseString));
     }
 
-    Course(JSONObject course) {
+    public Course(JSONObject course) {
         // TODO replace with JSONObject.isSimilar(Object o)
         if (!course.keySet().equals(REFERENCE_COURSE_JSON.keySet())) {
             throw new RuntimeException("JSONObject did not match REFERENCE_COURSE_JSON");
@@ -47,23 +47,23 @@ public class Course implements Comparable<Course> {
         this.course = course;
     }
 
-    String getCourseId() {
+    public String getCourseId() {
         return course.getString("course_id");
     }
 
-    String getCourseName() {
+    public String getCourseName() {
         return course.getString("name");
     }
 
-    String getDeptId() {
+    public String getDeptId() {
         return course.getString("dept_id");
     }
 
-    String getDepartment() {
+    public String getDepartment() {
         return course.getString("department");
     }
 
-    List<String> getSectionNames() {
+    public List<String> getSectionNames() {
         JSONArray rawSectionsList = course.getJSONArray("sections");
         List<String> sections = new ArrayList<>();
         for (Object o : rawSectionsList) {
@@ -118,4 +118,5 @@ public class Course implements Comparable<Course> {
     public int compareTo(Course c) {
         return this.getCourseId().compareTo(c.getCourseId());
     }
+
 }

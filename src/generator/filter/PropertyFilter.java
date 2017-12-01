@@ -1,12 +1,12 @@
 package generator.filter;
 
-import generator.Section;
+import generator.course.Section;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-public class PropertyFilter extends Filter {
+public class PropertyFilter extends DualFilter {
     private final String property;
 
     protected PropertyFilter(String applicableCourse, String property, Set<String> include, Set<String> exclude) {
