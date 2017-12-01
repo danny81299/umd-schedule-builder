@@ -26,12 +26,12 @@ public class Meeting {
     public Meeting(JSONObject meeting) {
         this.meeting = meeting;
         if (meeting.getString("room").toLowerCase().equals("online")) {
-            type = ClassType.ONLINE;
             days = new TreeSet<>();
             startTime = LocalTime.MIN;
             endTime = LocalTime.MIN;
             duration = Duration.ZERO;
             range = Range.all();
+            type = ClassType.ONLINE;
         } else {
             this.days = parseDaysString(meeting.getString("days"));
             DateTimeFormatterBuilder builder = new DateTimeFormatterBuilder();
@@ -47,6 +47,7 @@ public class Meeting {
             this.type = ClassType.parse(meeting.getString("classtype"));
         }
     }
+
     public String getInternalString(String s) {
         return meeting.getString(s);
     }

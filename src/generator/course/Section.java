@@ -51,11 +51,11 @@ public class Section implements Comparable<Section>, Iterable<Meeting> {
         generateMeetings();
     }
 
-    String getSectionId() {
+    public String getSectionId() {
         return section.getString("section_id");
     }
 
-    String getCourseId() {
+    public String getCourseId() {
         return section.getString("course");
     }
 

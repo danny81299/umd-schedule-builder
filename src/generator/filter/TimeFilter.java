@@ -70,6 +70,6 @@ public class TimeFilter extends AbstractFilter {
     }
 
     public boolean has(Meeting meeting) {
-        return includedTimes.encloses(meeting.getRange());
+        return meeting.getRange().equals(Range.all()) | includedTimes.encloses(meeting.getRange());
     }
 }
