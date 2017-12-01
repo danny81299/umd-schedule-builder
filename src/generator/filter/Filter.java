@@ -22,6 +22,8 @@ public interface Filter {
 
     boolean has(Schedule schedule);
 
+    String getCourseId();
+
     /**/
 
 }

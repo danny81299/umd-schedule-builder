@@ -67,8 +67,8 @@ public class Section implements Comparable<Section>, Iterable<Meeting> {
         return section.getInt("seats");
     }
 
-    int getOpenSeats() {
-        return section.optInt("open_seats", -1);
+    public int getOpenSeats() {
+        return section.optInt("open_seats", Integer.MAX_VALUE);
     }
 
     public String getInternalString(String s) {
@@ -96,7 +96,7 @@ public class Section implements Comparable<Section>, Iterable<Meeting> {
     }
 
     public int getWaitlist() {
-        return section.optInt("waitlist", -1);
+        return section.optInt("waitlist", Integer.MAX_VALUE);
     }
 
     void setCourse(Course course) {
