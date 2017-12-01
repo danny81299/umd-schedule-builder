@@ -1,7 +1,7 @@
 package generator.filter;
 
-import generator.course.ClassType;
-import generator.course.Section;
+import generator.schedule.ClassType;
+import generator.schedule.Section;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -1,7 +1,7 @@
 package generator.filter;
 
-import generator.Schedule;
-import generator.course.Section;
+import generator.schedule.Schedule;
+import generator.schedule.Section;
 import com.google.common.collect.Range;
 
 public class SeatFilter extends AbstractFilter {

@@ -1,4 +1,4 @@
-package generator.course;
+package generator.schedule;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

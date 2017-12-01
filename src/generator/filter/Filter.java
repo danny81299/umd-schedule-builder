@@ -1,7 +1,7 @@
 package generator.filter;
 
-import generator.Schedule;
-import generator.course.Section;
+import generator.schedule.Schedule;
+import generator.schedule.Section;
 
 public interface Filter {
 

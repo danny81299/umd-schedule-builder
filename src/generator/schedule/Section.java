@@ -1,4 +1,4 @@
-package generator.course;
+package generator.schedule;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import java.time.DayOfWeek;
 import java.util.*;
 
+// TODO consider immutable collections or unmodifiable collections
 public class Section implements Comparable<Section>, Iterable<Meeting> {
     private static final JSONObject REFERENCE_SECTION_JSON = generateReferenceSection();
     private final JSONObject section;
@@ -13,6 +14,8 @@ public class Section implements Comparable<Section>, Iterable<Meeting> {
     private final Map<DayOfWeek, Set<Meeting>> meetingsByDay = new HashMap<>();
     private final Map<ClassType, Meeting> meetingsByClassType = new HashMap<>();
     private final Set<Meeting> meetings = new HashSet<>();
+    private Course course;
+
     private static JSONObject generateReferenceSection() {
         Map<String, Object> referenceSection = new HashMap<>();
         referenceSection.put("section_id", "");
@@ -27,7 +30,6 @@ public class Section implements Comparable<Section>, Iterable<Meeting> {
         System.out.println(referenceSection.keySet());
         return new JSONObject(referenceSection);
     }
-    private Course course;
 
     //    private final String sectionId;
     //    private final String number;
@@ -76,7 +78,7 @@ public class Section implements Comparable<Section>, Iterable<Meeting> {
     }
 
     public Set<String> getInstructors() {
-        return instructors;
+        return new HashSet<>(instructors);
     }
 
     public String getSemester() {

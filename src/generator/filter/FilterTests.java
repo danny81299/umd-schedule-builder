@@ -1,7 +1,7 @@
 package generator.filter;
 
 import generator.Generator;
-import generator.course.Section;
+import generator.schedule.Section;
 import org.json.JSONObject;
 import org.junit.Test;
 

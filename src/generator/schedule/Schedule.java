@@ -1,12 +1,8 @@
-package generator;
+package generator.schedule;
 
 import com.google.common.collect.Range;
 import com.google.common.collect.RangeSet;
 import com.google.common.collect.TreeRangeSet;
-import generator.course.ClassType;
-import generator.course.Course;
-import generator.course.Meeting;
-import generator.course.Section;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.DayOfWeek;
@@ -19,8 +15,6 @@ public class Schedule implements /*Comparable<Schedule>, */Iterable<Section> {
     private final Map<Course, Section> classes = new HashMap<>();
     private final Set<Meeting> meetings = new HashSet<>();
     private final Map<DayOfWeek, Set<Meeting>> meetingsByDay = new HashMap<>();
-//    private final Map<DayOfWeek, RangeSet<LocalTime>> masterRange = new HashMap<>();
-//    private final boolean isValid;
 
     public Schedule(Map<Course, Section> classes) {
         this.classes.putAll(classes);
@@ -31,23 +25,16 @@ public class Schedule implements /*Comparable<Schedule>, */Iterable<Section> {
             for (DayOfWeek day : meetingsByDay.keySet()) {
                 if (!this.meetingsByDay.containsKey(day)) {
                     this.meetingsByDay.put(day, new HashSet<>());
-//                    this.masterRange.put(day, TreeRangeSet.create());
                 }
-                /*for (Meeting m : meetingsByDay.get(day)) {
-                    this.meetingsByDay.get(day).add(m);
-                    if (masterRange.get(day).intersects(m.getRange())) isValid = false;
-                    this.masterRange.get(day).add(m.getRange());
-                }*/
                 this.meetingsByDay.get(day).addAll(meetingsByDay.get(day));
 
             }
         }
-//        isValid = true;
     }
 
-//    public boolean isValid() {
-//        return isValid;
-//    }
+    public boolean isValid() {
+        return !hasConflicts();
+    }
 
     public boolean hasConflicts() {
         for (DayOfWeek day : meetingsByDay.keySet()) {

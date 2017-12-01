@@ -1,8 +1,8 @@
 package generator.filter;
 
-import generator.course.Meeting;
-import generator.Schedule;
-import generator.course.Section;
+import generator.schedule.Meeting;
+import generator.schedule.Schedule;
+import generator.schedule.Section;
 import com.google.common.collect.Range;
 import com.google.common.collect.RangeSet;
 import com.google.common.collect.TreeRangeSet;

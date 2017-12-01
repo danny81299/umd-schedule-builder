@@ -1,4 +1,4 @@
-package generator.course;
+package generator.schedule;
 
 import com.google.common.collect.Range;
 import org.json.JSONObject;

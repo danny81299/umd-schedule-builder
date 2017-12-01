@@ -1,5 +1,6 @@
 package generator;
 
+import generator.schedule.Schedule;
 import generator.filter.*;
 import org.junit.Test;
 

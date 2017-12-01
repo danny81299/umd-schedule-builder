@@ -1,6 +1,6 @@
 package generator.filter;
 
-import generator.course.Section;
+import generator.schedule.Section;
 
 import java.util.Collections;
 import java.util.HashSet;
