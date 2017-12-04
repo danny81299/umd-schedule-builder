@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.*;
+import java.util.stream.Stream;
 
 public class Schedule implements /*Comparable<Schedule>, */Iterable<Section> {
 
@@ -100,4 +101,7 @@ public class Schedule implements /*Comparable<Schedule>, */Iterable<Section> {
 //    public int compareTo(@NotNull Schedule o) {
 //        return sections.compareTo(o);
 //    }
+
+//    public Stream<Section> stream() {return sections.stream(); }
+
 }

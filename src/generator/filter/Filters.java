@@ -1,6 +1,7 @@
 package generator.filter;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 public class Filters {
     private Map<String, Set<Filter>> filters = new HashMap<>();
@@ -29,7 +30,8 @@ public class Filters {
         return new HashSet<>();
     }
 
-    public Set<String> getCourses() {
+    public Set<String> getCourseIds() {
         return filters.keySet();
     }
+
 }

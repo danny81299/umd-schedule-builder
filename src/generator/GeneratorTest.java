@@ -101,8 +101,27 @@ public class GeneratorTest {
         Filters filters = new Filters();
         filters.addAll(instructorFilters);
 
+        generator.generateAllPermutations();
+        assertEquals(179_712, generator.getPermutations().size());
+
         generator.filterSections(filters);
         generator.generatePermutations();
+        assertEquals(1_920, generator.getPermutations().size());
+
+        instructorFilters = new HashSet<>();
+        instructorFilters.addAll(Arrays.asList(
+                InstructorFilter.include("CMSC256", "Nelson Padua-Perez"),
+                InstructorFilter.include("CMSC250","Iason Filippou"),
+                InstructorFilter.include("INAG110", "Anthony Pagnotti"),
+                InstructorFilter.include("STAT400", "John Millson")
+        ));
+        filters = new Filters();
+        filters.addAll(instructorFilters);
+
+        generator.filterSections(filters);
+        generator.generatePermutations();
+        assertEquals(3_840, generator.getPermutations().size());
+
         generator.trimInvalidSchedules();
 
         System.out.println(generator.getPermutations().size());

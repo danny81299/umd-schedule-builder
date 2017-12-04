@@ -1,12 +1,10 @@
 package generator;
 
+import generator.filter.Filter;
+import generator.filter.Filters;
 import generator.schedule.Course;
 import generator.schedule.Schedule;
 import generator.schedule.Section;
-import generator.filter.Filter;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSortedMap;
-import generator.filter.Filters;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -73,21 +71,42 @@ public class Generator {
     }
 
     public void filterSections(Filters filters) {
+//        for (Course c : allCourses.keySet()) {
+//            filteredCourses.put(c, new HashSet<>());
+//            if (filters.containsCourseId(c.getCourseId())) {
+//                for (Section s : allCourses.get(c)) {
+//                    filteredCourses.get(c).add(s);
+//                    for (Filter f : filters.getFilters(c.getCourseId())) {
+//                        if (!f.has(s)) {
+//                            filteredCourses.get(c).remove(s);
+//                            break;
+//                        }
+//                    }
+//                }
+//            }
+//        }
+
+        // filteredCourses : Map<Course, Section>
         filteredCourses = new HashMap<>();
-        for (Course c : allCourses.keySet()) {
-            filteredCourses.put(c, new HashSet<>());
-            if (filters.containsCourseId(c.getCourseId())) {
-                for (Section s : allCourses.get(c)) {
-                    filteredCourses.get(c).add(s);
-                    for (Filter f : filters.getFilters(c.getCourseId())) {
-                        if (!f.has(s)) {
-                            filteredCourses.get(c).remove(s);
-                            break;
-                        }
-                    }
-                }
-            }
-        }
+        allCourses.keySet()
+                .forEach(course -> {
+                    filteredCourses.put(course, new HashSet<>(allCourses.get(course)));
+                    // TODO simplify the below :(
+//                    allCourses.get(course)
+//                            .stream()
+//                            .filter(section -> {
+//                                filters.getFilters(course.getCourseId())
+//                                        .stream()
+//                                        .mapToInt(f -> f.has(section))
+//                            })
+
+                    filters.getFilters(course.getCourseId()).forEach(f -> filteredCourses.get(course).retainAll(
+                            filteredCourses.get(course)
+                                    .stream()
+                                    .filter(f::has)
+                                    .collect(Collectors.toSet())
+                    ));
+                });
     }
 
     Set<Schedule> getPermutations() {
@@ -109,26 +128,28 @@ public class Generator {
     }
 
     void generateAllPermutations() {
+        schedulePermutations.clear();
+
         int setSize = 1;
         for (Set<Section> set : this.allCourses.values()) setSize *= set.size();
         this.generateSchedulePermutations(new ArrayList<>(this.allCourses.values()), new HashSet<>(setSize),
                 new HashMap<>());
+
+        System.out.println(setSize);
     }
 
     void generatePermutations() {
+        schedulePermutations.clear();
+
         int size = filteredCourses
                 .values()
                 .stream()
                 .mapToInt(Set::size)
                 .reduce(1, (a, b) -> a * b);
-
-        int setSize = 1;
-        for (Set<Section> set : filteredCourses.values()) {
-            setSize *= set.size();
-        }
+        System.out.println(size);
 
         this.generateSchedulePermutations(new ArrayList<>(filteredCourses.values()), new HashSet<>
-                (setSize), new HashMap<>());
+                (size), new HashMap<>());
     }
 
     // TODO deal with weirdness of going between lists and sets
