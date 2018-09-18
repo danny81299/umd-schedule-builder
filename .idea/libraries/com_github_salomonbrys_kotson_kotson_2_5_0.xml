@@ -1,0 +1,23 @@
+<component name="libraryTable">
+  <library name="com.github.salomonbrys.kotson:kotson:2.5.0" type="repository">
+    <properties maven-id="com.github.salomonbrys.kotson:kotson:2.5.0" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/kotson-2.5.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/gson-2.8.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/kotlin-runtime-1.0.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/kotlin-stdlib.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/lib/kotson-2.5.0-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/gson-2.8.0-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/kotlin-stdlib-1.0.6-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/kotlin-runtime-1.0.6-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/kotson-2.5.0-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/gson-2.8.0-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/kotlin-stdlib-1.0.6-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/kotlin-runtime-1.0.6-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

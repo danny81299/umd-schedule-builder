@@ -24,10 +24,9 @@ public class Section implements Comparable<Section>, Iterable<Meeting> {
         referenceSection.put("instructors", new String[0]);
         referenceSection.put("seats", 0);
         referenceSection.put("semester", "");
-        referenceSection.put("meetingsByClassType", new Map[0]);
+        referenceSection.put("meetings", new Map[0]);
         referenceSection.put("open_seats", 0);
         referenceSection.put("waitlist", 0);
-        System.out.println(referenceSection.keySet());
         return new JSONObject(referenceSection);
     }
 
@@ -147,7 +146,7 @@ public class Section implements Comparable<Section>, Iterable<Meeting> {
 
     @Override
     public String toString() {
-        return this.getSectionId();
+        return this.getSectionId() /*+ " " + meetings.toString()*/;
     }
 
     @Override

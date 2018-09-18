@@ -19,6 +19,8 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="org.json:json:20171018" level="project" />
-    <orderEntry type="library" name="com.google.guava:guava:23.4-jre" level="project" />
+    <orderEntry type="library" name="com.google.guava:guava:24.0-jre" level="project" />
+    <orderEntry type="library" name="com.google.code.gson:gson:2.8.2" level="project" />
+    <orderEntry type="library" name="com.github.salomonbrys.kotson:kotson:2.5.0" level="project" />
   </component>
 </module>

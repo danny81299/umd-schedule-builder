@@ -100,4 +100,9 @@ public class Meeting {
         if (s.contains("F")) days.add(DayOfWeek.FRIDAY);
         return days;
     }
+
+    @Override
+    public String toString() {
+        return meeting.toString();
+    }
 }

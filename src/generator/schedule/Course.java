@@ -6,10 +6,10 @@ import org.json.JSONObject;
 import java.util.*;
 
 public class Course implements Comparable<Course> {
-    private static final JSONObject REFERENCE_COURSE_JSON = generateReferenceCourseJSON();
+    private static final JSONObject REFERENCE_COURSE_JSON;
     private final JSONObject course;
 
-    private static JSONObject generateReferenceCourseJSON() {
+    static {
         Map<String, Object> referenceCourse = new HashMap<>();
         referenceCourse.put("course_id", "");
         referenceCourse.put("name", "");
@@ -31,7 +31,7 @@ public class Course implements Comparable<Course> {
         relationships.put("additional_info", "");
         referenceCourse.put("relationships", relationships);
         referenceCourse.put("sections", new String[0]);
-        return new JSONObject(referenceCourse);
+        REFERENCE_COURSE_JSON = new JSONObject(referenceCourse);
     }
 
     @Deprecated
